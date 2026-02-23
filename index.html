@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Purnendra Bakery | Luxury Party & Cake Store</title>
+    <title>Laxman Bakery | Luxury Party & Cake Store</title>
 
-    <!-- GOOGLE ANALYTICS: analytics.google.com se G-XXXXXXXXXX milega — woh ID neeche daalo -->
+    <!-- GOOGLE ANALYTICS: Get G-XXXXXXXXXX from analytics.google.com — paste that ID below -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -14,7 +14,7 @@
         gtag('config', 'G-XXXXXXXXXX');
     </script>
 
-    <!-- EMAILJS: emailjs.com se Public Key, Service ID aur Template IDs milenge -->
+    <!-- EMAILJS: Get Public Key, Service ID and Template IDs from emailjs.com -->
     <script>
         /* EmailJS will init after SDK loads — see window.load listener below */
         const EJS_SERVICE_ID = "YOUR_SERVICE_ID";
@@ -23,7 +23,7 @@
         const OWNER_EMAIL    = "YOUR_EMAIL@gmail.com";
     </script>
 
-    <!-- SUPABASE DATABASE: supabase.com se Project URL aur Anon Key milegi -->
+    <!-- SUPABASE DATABASE: Get Project URL and Anon Key from supabase.com -->
     <script>
         const SUPABASE_URL      = "https://XXXX.supabase.co";
         const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";
@@ -77,7 +77,7 @@
         /* ═══ TOP BAR (Offer Banners / Closed Banner) — 34px tall, always fixed ═══
            ✏️ Band karne ke liye: #topBar { display:none !important; }
            ✏️ Height badlne ke liye: --topbar-h value change karein             */
-        :root { --topbar-h: 0px; }
+        :root { --topbar-h: 34px; }
 
         /* ROTATING OFFER BANNERS */
         #topBar {
@@ -135,9 +135,14 @@
             border: 1px solid #fef3c7; box-shadow: 0 2px 20px rgba(0,0,0,0.04);
             transition: box-shadow 0.3s, transform 0.3s;
         }
+        /* Product grid desktop: 4 columns, cards never stretch too wide */
+        @media(min-width:1024px){ #productGrid { grid-template-columns: repeat(4,minmax(0,1fr)); } }
+        @media(min-width:1280px){ #productGrid { grid-template-columns: repeat(4,minmax(0,280px)); justify-content: center; } }
         .product-card:hover { box-shadow: 0 8px 40px rgba(184,134,11,0.12); transform: translateY(-3px); }
 
         .gallery-wrap { position: relative; overflow: hidden; background: #f9f5f0; }
+        /* Desktop: constrain gallery height so photos don't become huge */
+        @media(min-width:1024px){ .gallery-wrap.h-44,.gallery-wrap.h-60 { height: 220px !important; } }
         .gallery-track { display: flex; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); height: 100%; }
         .gallery-track img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; cursor: zoom-in; }
 
@@ -531,10 +536,13 @@
 
 <!-- ==========================================
      TOP BAR — ROTATING OFFER BANNERS
-     ✏️ Banners JS mein badlein: offerBanners array (neeche script mein)
-     ✏️ Band karne ke liye: offerBanners = [] karein
+     ✏️ Change banners in JS: offerBanners array (in script below)
+     ✏️ To disable: set offerBanners = []
      ✏️ Discount code copy: code pill par click karein
 ========================================== -->
+<!-- OPEN BANNER (shows when shop is open) -->
+<div id="openBanner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;height:var(--topbar-h);background:linear-gradient(135deg,#166534,#16a34a);color:white;text-align:center;font-size:12px;font-weight:700;align-items:center;justify-content:center;padding:0 12px;letter-spacing:0.04em;">🟢 Shop OPEN &nbsp;|&nbsp; Mon–Sat: 9AM–10PM &nbsp;|&nbsp; Sun: 10AM–11PM &nbsp;|&nbsp; Order Now! 🎂</div>
+
 <!-- CLOSED BANNER (only shows when shop closed) -->
 <div id="closedBanner">🔴 Shop CLOSED &nbsp;|&nbsp; Mon–Sat: 9AM–10PM &nbsp;|&nbsp; Sun: 10AM–11PM</div>
 
@@ -546,7 +554,7 @@
                 <i data-lucide="menu" class="text-amber-800 w-5 h-5"></i>
             </button>
             <div class="cursor-pointer" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-                <h1 class="heading-font text-xl md:text-3xl font-bold gold-text leading-none">Purnendra</h1>
+                <h1 class="heading-font text-xl md:text-3xl font-bold gold-text leading-none">Laxman</h1>
                 <p class="text-[8px] md:text-[9px] uppercase tracking-[0.3em] font-bold text-gray-400">Bakery & Party Store</p>
             </div>
         </div>
@@ -582,7 +590,7 @@
 </nav>
 
 <!-- ROW 2: Category Navigation Bar -->
-<!-- ✏️ Category links badlne ke liye: text aur onclick mein category naam same rakho data-cat se -->
+<!-- ✏️ To change category links: keep text and onclick category name same as data-cat -->
 <div id="catNavBar" class="sticky z-[195]" style="top:calc(var(--topbar-h) + 64px);">
     <button class="cat-nav-link active" onclick="catNavClick(this,'All')">🏠 All</button>
     <button class="cat-nav-link" onclick="catNavClick(this,'Cake')">🎂 Cakes</button>
@@ -594,7 +602,7 @@
     <button class="cat-nav-link" onclick="scrollToSection('policy')">🔄 Returns</button>
     <button class="cat-nav-link" onclick="scrollToSection('about')">ℹ️ About</button>
     <button class="cat-nav-link" onclick="window.open('https://wa.me/919399564309','_blank')">💬 WhatsApp</button>
-    <!-- ✏️ COD delivery button — COD_ENABLED=true hone par show hoga JS se -->
+    <!-- ✏️ COD delivery button — shows when COD_ENABLED=true in JS -->
     <button class="cat-nav-link" id="codNavBtn" style="display:none;" onclick="showCODInfo()">💵 COD</button>
     <button class="cat-nav-link" id="deliveryNavBtn" style="display:none;" onclick="showDeliveryInfo()">🚚 Delivery</button>
 </div>
@@ -665,7 +673,7 @@
         <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6 z-10">
             <div class="inline-block bg-white/10 backdrop-blur-sm rounded-full px-4 py-1 text-xs font-bold uppercase tracking-widest mb-3 border border-white/20">🏆 Award-Winning</div>
             <h2 class="heading-font text-5xl sm:text-6xl md:text-8xl font-bold mb-3 drop-shadow-lg">Artisan Cakes</h2>
-            <p class="text-base md:text-2xl opacity-90 drop-shadow mb-5">Experience the gold standard of Purnendra Bakery.</p>
+            <p class="text-base md:text-2xl opacity-90 drop-shadow mb-5">Experience the gold standard of Laxman Bakery.</p>
             <button onclick="catNavClick(document.querySelector('.cat-nav-link'),'All')" class="bg-white text-amber-900 font-black text-sm px-6 py-2.5 rounded-full shadow-lg hover:scale-105 transition-all active:scale-95">Order Now →</button>
         </div>
     </div>
@@ -1086,7 +1094,7 @@
         <p class="text-amber-400 font-bold uppercase tracking-[0.4em] text-xs mb-3">Why Choose Us</p>
         <h2 class="heading-font text-3xl md:text-5xl font-bold italic mb-4">Crafted With Uncompromising Quality</h2>
         <p class="text-amber-200/80 text-sm md:text-base max-w-2xl mx-auto mb-12 leading-relaxed">
-            At Purnendra Bakery, quality is not a department — it is our entire identity. Every item that leaves our kitchen has been prepared with the finest sourced ingredients, strict hygiene protocols, and decades of baking mastery. We believe that when food is made with love and the best ingredients, it speaks for itself.
+            At Laxman Bakery, quality is not a department — it is our entire identity. Every item that leaves our kitchen has been prepared with the finest sourced ingredients, strict hygiene protocols, and decades of baking mastery. We believe that when food is made with love and the best ingredients, it speaks for itself.
         </p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
             <div class="bg-white/10 rounded-2xl p-5 text-center">
@@ -1120,7 +1128,7 @@
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-12">
             <p class="text-amber-600 font-bold uppercase tracking-[0.4em] text-xs mb-3">Our Commitment</p>
-            <h2 class="heading-font text-3xl md:text-5xl font-bold gold-text italic mb-4">The Purnendra Promise</h2>
+            <h2 class="heading-font text-3xl md:text-5xl font-bold gold-text italic mb-4">The Laxman Promise</h2>
             <div class="h-1 w-24 gold-bg mx-auto rounded-full mb-6"></div>
             <p class="text-gray-500 text-sm max-w-xl mx-auto">We stand firmly behind every product we create. Your satisfaction is our reputation.</p>
         </div>
@@ -1163,7 +1171,7 @@
 <footer class="bg-gray-950 text-white pt-16 pb-10 px-6">
     <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
         <div class="col-span-2 md:col-span-1">
-            <h2 class="heading-font text-3xl gold-text italic mb-4">Purnendra</h2>
+            <h2 class="heading-font text-3xl gold-text italic mb-4">Laxman</h2>
             <p class="text-gray-500 text-sm leading-relaxed mb-6">Premium bakery and party hub since 2010. Pure quality, sweet memories.</p>
             <div class="flex gap-3">
                 <a href="https://wa.me/919399564309" class="w-9 h-9 border border-gray-800 rounded-xl flex items-center justify-center hover:bg-green-600 transition-colors">
@@ -1200,7 +1208,7 @@
         </div>
     </div>
     <div class="border-t border-gray-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-3">
-        <p class="text-[10px] text-gray-700 tracking-[0.5em] uppercase">© 2025 Purnendra Bakery &amp; Party Hub. All Rights Reserved.</p>
+        <p class="text-[10px] text-gray-700 tracking-[0.5em] uppercase">© 2025 Laxman Bakery &amp; Party Hub. All Rights Reserved.</p>
         <div class="flex gap-4 text-[11px] text-gray-600">
             <button onclick="openModal('termsModal')" class="hover:text-gray-400 transition-colors">Terms &amp; Conditions</button>
             <span>|</span>
@@ -1347,7 +1355,7 @@
             <!-- Edit Profile Form (hidden by default) -->
             <div id="editProfileForm" style="display:none;background:#fff7ed;border-radius:14px;padding:14px;margin-bottom:10px;">
                 <p style="font-size:11px;font-weight:800;color:#78350f;text-transform:uppercase;margin-bottom:10px;">✏️ Edit Your Profile</p>
-                <input id="editName" type="text" placeholder="Apna naam" style="width:100%;box-sizing:border-box;padding:10px 13px;border:2px solid #fde68a;border-radius:11px;font-size:13px;outline:none;background:#fffbeb;color:#1c1917;margin-bottom:8px;font-family:'Poppins',sans-serif;">
+                <input id="editName" type="text" placeholder="Your name" style="width:100%;box-sizing:border-box;padding:10px 13px;border:2px solid #fde68a;border-radius:11px;font-size:13px;outline:none;background:#fffbeb;color:#1c1917;margin-bottom:8px;font-family:'Poppins',sans-serif;">
                 <input id="editPhone" type="tel" placeholder="Mobile number" style="width:100%;box-sizing:border-box;padding:10px 13px;border:2px solid #fde68a;border-radius:11px;font-size:13px;outline:none;background:#fffbeb;color:#1c1917;margin-bottom:10px;font-family:'Poppins',sans-serif;">
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
                     <button onclick="saveProfileEdit()" style="padding:10px;background:#78350f;color:white;border:none;border-radius:11px;font-size:12px;font-weight:800;cursor:pointer;">Save ✓</button>
@@ -1367,8 +1375,8 @@
 
 <!-- ==========================================
      🚀 ORDER TRACKER — Zomato/Swiggy style
-     JS mein showOrderTracker() call karo order place hone par
-     ✏️ Band karne ke liye: #orderTracker { display:none !important; }
+     Call showOrderTracker() in JS when order is placed
+     ✏️ To hide: #orderTracker { display:none !important; }
 ========================================== -->
 <div id="orderTracker" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
      background:white;border-radius:22px;box-shadow:0 8px 40px rgba(0,0,0,0.22);
@@ -1384,24 +1392,24 @@
         <div style="display:flex;align-items:center;gap:10px;padding:5px 0;position:relative;">
             <div style="position:absolute;left:13px;top:32px;width:2px;height:18px;background:#fde68a;z-index:0;"></div>
             <div style="width:27px;height:27px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;z-index:1;">✅</div>
-            <div><div style="font-size:11px;font-weight:700;color:#78350f;">Order Received</div><div style="font-size:9px;color:#92400e;opacity:.8;">Aapka order mil gaya!</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#78350f;">Order Received</div><div style="font-size:9px;color:#92400e;opacity:.8;">Your order has been received!</div></div>
         </div>
         <!-- Step 2 -->
         <div style="display:flex;align-items:center;gap:10px;padding:5px 0;position:relative;">
             <div style="position:absolute;left:13px;top:32px;width:2px;height:18px;background:#fde68a;z-index:0;"></div>
             <div id="trackerPrep" style="width:27px;height:27px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;z-index:1;animation:pulseTracker 1.2s infinite;">👨‍🍳</div>
-            <div><div style="font-size:11px;font-weight:700;color:#78350f;">Preparing</div><div style="font-size:9px;color:#92400e;opacity:.8;" id="trackerPrepSub">Tayaari chal rahi hai...</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#78350f;">Preparing</div><div style="font-size:9px;color:#92400e;opacity:.8;" id="trackerPrepSub">Preparation in progress...</div></div>
         </div>
         <!-- Step 3 -->
         <div style="display:flex;align-items:center;gap:10px;padding:5px 0;position:relative;">
             <div style="position:absolute;left:13px;top:32px;width:2px;height:18px;background:#fde68a;z-index:0;"></div>
             <div id="trackerDeliv" style="width:27px;height:27px;border-radius:50%;background:#f5f5f4;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;z-index:1;">🚚</div>
-            <div><div style="font-size:11px;font-weight:700;color:#78350f;">Out for Delivery</div><div style="font-size:9px;color:#92400e;opacity:.8;">Raste mein hai!</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#78350f;">Out for Delivery</div><div style="font-size:9px;color:#92400e;opacity:.8;">On the way!</div></div>
         </div>
         <!-- Step 4 -->
         <div style="display:flex;align-items:center;gap:10px;padding:5px 0;">
             <div id="trackerDone" style="width:27px;height:27px;border-radius:50%;background:#f5f5f4;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">🎉</div>
-            <div><div style="font-size:11px;font-weight:700;color:#78350f;">Delivered!</div><div style="font-size:9px;color:#92400e;opacity:.8;">Enjoy karo!</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#78350f;">Delivered!</div><div style="font-size:9px;color:#92400e;opacity:.8;">Enjoy!</div></div>
         </div>
     </div>
     <div style="margin-top:12px;padding-top:10px;border-top:1px solid #fef3c7;display:grid;grid-template-columns:1fr 1fr;gap:7px;">
@@ -1473,8 +1481,8 @@
         <div style="font-size:11px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">📋 YOUR DELIVERY DETAILS</div>
 
         <!-- Name -->
-        <label style="display:block;font-size:10px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">👤 POORA NAAM *</label>
-        <input id="orderName" type="text" placeholder="Apna poora naam likho" style="width:100%;box-sizing:border-box;padding:13px 15px;border:2px solid #fde68a;border-radius:14px;font-size:13px;font-family:'Poppins',sans-serif;background:#fffbeb;color:#1c1917;outline:none;margin-bottom:12px;transition:border-color .2s;" onfocus="this.style.borderColor='#b8860b'" onblur="this.style.borderColor='#fde68a'">
+        <label style="display:block;font-size:10px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">👤 FULL NAME *</label>
+        <input id="orderName" type="text" placeholder="Enter your full name" style="width:100%;box-sizing:border-box;padding:13px 15px;border:2px solid #fde68a;border-radius:14px;font-size:13px;font-family:'Poppins',sans-serif;background:#fffbeb;color:#1c1917;outline:none;margin-bottom:12px;transition:border-color .2s;" onfocus="this.style.borderColor='#b8860b'" onblur="this.style.borderColor='#fde68a'">
 
         <!-- Phone -->
         <label style="display:block;font-size:10px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">📱 MOBILE NUMBER *</label>
@@ -1482,19 +1490,19 @@
 
         <!-- Address -->
         <label style="display:block;font-size:10px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">🏠 DELIVERY ADDRESS *</label>
-        <textarea id="orderAddress" placeholder="Ghar number, gali, mohalla, sheher..." rows="2" style="width:100%;box-sizing:border-box;padding:13px 15px;border:2px solid #fde68a;border-radius:14px;font-size:13px;font-family:'Poppins',sans-serif;background:#fffbeb;color:#1c1917;outline:none;margin-bottom:12px;resize:none;transition:border-color .2s;" onfocus="this.style.borderColor='#b8860b'" onblur="this.style.borderColor='#fde68a'"></textarea>
+        <textarea id="orderAddress" placeholder="House number, street, area, city..." rows="2" style="width:100%;box-sizing:border-box;padding:13px 15px;border:2px solid #fde68a;border-radius:14px;font-size:13px;font-family:'Poppins',sans-serif;background:#fffbeb;color:#1c1917;outline:none;margin-bottom:12px;resize:none;transition:border-color .2s;" onfocus="this.style.borderColor='#b8860b'" onblur="this.style.borderColor='#fde68a'"></textarea>
 
         <!-- Special Note -->
         <label style="display:block;font-size:10px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">✏️ SPECIAL NOTE (OPTIONAL)</label>
-        <textarea id="orderNote" placeholder="Jaise: Happy Birthday likhna, ya koi design chahiye..." rows="2" style="width:100%;box-sizing:border-box;padding:13px 15px;border:2px solid #fde68a;border-radius:14px;font-size:13px;font-family:'Poppins',sans-serif;background:#fffbeb;color:#1c1917;outline:none;margin-bottom:12px;resize:none;transition:border-color .2s;" onfocus="this.style.borderColor='#b8860b'" onblur="this.style.borderColor='#fde68a'"></textarea>
+        <textarea id="orderNote" placeholder="E.g.: Write Happy Birthday, or any design request..." rows="2" style="width:100%;box-sizing:border-box;padding:13px 15px;border:2px solid #fde68a;border-radius:14px;font-size:13px;font-family:'Poppins',sans-serif;background:#fffbeb;color:#1c1917;outline:none;margin-bottom:12px;resize:none;transition:border-color .2s;" onfocus="this.style.borderColor='#b8860b'" onblur="this.style.borderColor='#fde68a'"></textarea>
 
         <!-- Delivery time -->
-        <label style="display:block;font-size:10px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">⏰ DELIVERY KAB CHAHIYE?</label>
+        <label style="display:block;font-size:10px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">⏰ WHEN DO YOU NEED DELIVERY?</label>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
-            <button class="dtime-btn active" onclick="selectDeliveryTime(this,'Aaj (Today)')" style="padding:10px 8px;border:2px solid #fde68a;border-radius:12px;font-size:11px;font-weight:700;background:#fffbeb;color:#78350f;cursor:pointer;transition:all .2s;">📅 Aaj (Today)</button>
-            <button class="dtime-btn" onclick="selectDeliveryTime(this,'Kal (Tomorrow)')" style="padding:10px 8px;border:2px solid #e7e5e4;border-radius:12px;font-size:11px;font-weight:700;background:white;color:#78350f;cursor:pointer;transition:all .2s;">📅 Kal (Tomorrow)</button>
-            <button class="dtime-btn" onclick="selectDeliveryTime(this,'2-3 Din Mein')" style="padding:10px 8px;border:2px solid #e7e5e4;border-radius:12px;font-size:11px;font-weight:700;background:white;color:#78350f;cursor:pointer;transition:all .2s;">📅 2-3 Din Mein</button>
-            <button class="dtime-btn" onclick="selectDeliveryTime(this,'Date confirm karunga')" style="padding:10px 8px;border:2px solid #e7e5e4;border-radius:12px;font-size:11px;font-weight:700;background:white;color:#78350f;cursor:pointer;transition:all .2s;">📅 Date confirm karunga</button>
+            <button class="dtime-btn active" onclick="selectDeliveryTime(this,'Today')" style="padding:10px 8px;border:2px solid #fde68a;border-radius:12px;font-size:11px;font-weight:700;background:#fffbeb;color:#78350f;cursor:pointer;transition:all .2s;">📅 Today</button>
+            <button class="dtime-btn" onclick="selectDeliveryTime(this,'Tomorrow')" style="padding:10px 8px;border:2px solid #e7e5e4;border-radius:12px;font-size:11px;font-weight:700;background:white;color:#78350f;cursor:pointer;transition:all .2s;">📅 Tomorrow</button>
+            <button class="dtime-btn" onclick="selectDeliveryTime(this,'In 2-3 Days')" style="padding:10px 8px;border:2px solid #e7e5e4;border-radius:12px;font-size:11px;font-weight:700;background:white;color:#78350f;cursor:pointer;transition:all .2s;">📅 In 2-3 Days</button>
+            <button class="dtime-btn" onclick="selectDeliveryTime(this,'Will confirm date')" style="padding:10px 8px;border:2px solid #e7e5e4;border-radius:12px;font-size:11px;font-weight:700;background:white;color:#78350f;cursor:pointer;transition:all .2s;">📅 Will confirm date</button>
         </div>
         <div id="step1Err" style="display:none;background:#fee2e2;border-radius:10px;padding:8px 12px;font-size:11px;font-weight:700;color:#dc2626;margin-bottom:10px;"></div>
         <button onclick="goToStep2()" style="width:100%;padding:15px;background:linear-gradient(135deg,#78350f,#b8860b);color:white;border:none;border-radius:16px;font-size:14px;font-weight:900;cursor:pointer;letter-spacing:.02em;box-shadow:0 4px 18px rgba(120,53,15,0.3);transition:all .2s;active:transform:scale(0.98)">
@@ -1507,7 +1515,7 @@
         <!-- Discount code -->
         <div style="font-size:11px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">🏷️ DISCOUNT CODE (OPTIONAL)</div>
         <div style="display:flex;gap:8px;margin-bottom:6px;">
-            <input type="text" id="discountCodeInput" placeholder="Code daalo (e.g. CAKE10)"
+            <input type="text" id="discountCodeInput" placeholder="Enter code (e.g. CAKE10)"
                 style="flex:1;padding:11px 13px;border:2px solid #fde68a;border-radius:12px;font-size:12px;outline:none;font-family:'Poppins',sans-serif;background:#fffbeb;color:#1c1917;transition:border-color .2s;"
                 onfocus="this.style.borderColor='#b8860b'" onblur="this.style.borderColor='#fde68a'"
                 onkeydown="if(event.key==='Enter')applyDiscountCode()">
@@ -1537,7 +1545,7 @@
                 <span class="pay-icon">💵</span>
                 <div style="flex:1;text-align:left;">
                     <div class="pay-label" style="color:#1d4ed8;">Cash on Delivery</div>
-                    <div class="pay-sub">Delivery ke waqt cash payment</div>
+                    <div class="pay-sub">Cash payment at delivery</div>
                 </div>
                 <span style="font-size:10px;font-weight:800;background:#dbeafe;color:#1d4ed8;padding:3px 10px;border-radius:50px;white-space:nowrap;">COD</span>
             </button>
@@ -1545,17 +1553,13 @@
 
         <!-- UPI SECTION -->
         <div id="upiSection" style="display:none;">
-            <!-- Step 1: Open UPI App -->
+            <!-- UPI App Launch Button -->
             <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #86efac;border-radius:14px;padding:14px;margin-bottom:14px;">
-                <p style="font-size:11px;font-weight:800;text-transform:uppercase;color:#166534;margin-bottom:8px;">Step 1: Open Your UPI App</p>
-                <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px;">
-                    <div style="display:flex;align-items:flex-start;gap:10px;"><span class="step-badge">1</span><p style="font-size:12px;color:#166534;line-height:1.5;">Neeche button dabao — GPay, PhonePe ya Paytm open hogi.</p></div>
-                    <div style="display:flex;align-items:flex-start;gap:10px;"><span class="step-badge">2</span><p style="font-size:12px;color:#166534;line-height:1.5;">Payment karo — exact amount already fill hoga.</p></div>
-                    <div style="display:flex;align-items:flex-start;gap:10px;"><span class="step-badge">3</span><p style="font-size:12px;color:#166534;line-height:1.5;">Payment hone ke baad wapas aao aur "Order Place" karo.</p></div>
-                </div>
-                <button onclick="_launchUPIApp()" style="width:100%;padding:13px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:white;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 18px rgba(99,102,241,0.35);transition:all .2s;active:transform:scale(0.97)">
-                    📲 Open UPI App (GPay / PhonePe / Paytm)
+                <p style="font-size:12px;font-weight:700;color:#166534;margin-bottom:10px;">Your UPI app (GPay / PhonePe / Paytm) will open automatically with the payment amount already filled in.</p>
+                <button onclick="_launchUPIApp()" style="width:100%;padding:13px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:white;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 18px rgba(99,102,241,0.35);transition:all .2s;">
+                    📲 Pay via UPI — Opens Automatically
                 </button>
+                <p style="font-size:11px;color:#166534;margin-top:8px;text-align:center;opacity:0.75;">After paying, come back here and click "Place Order on WhatsApp" to confirm.</p>
             </div>
 
             <!-- OR: QR + Manual UPI ID -->
@@ -1563,10 +1567,10 @@
 
             <div class="qr-box mb-4">
                 <img id="upiQrImg" src="" alt="UPI QR" class="w-44 h-44 rounded-xl">
-                <p style="font-size:10px;color:#9ca3af;font-weight:600;margin-top:6px;">Kisi bhi UPI app se scan karein</p>
+                <p style="font-size:10px;color:#9ca3af;font-weight:600;margin-top:6px;">Scan with any UPI app</p>
             </div>
             <div style="margin-bottom:14px;">
-                <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#9ca3af;margin-bottom:8px;">Ya UPI ID manually enter karein</p>
+                <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#9ca3af;margin-bottom:8px;">Or enter UPI ID manually</p>
                 <div class="upi-id-pill" onclick="copyUPI(this)">
                     <span id="upiIdText">9399564309@ybl</span>
                     <i data-lucide="copy" class="w-4 h-4 text-amber-700 shrink-0"></i>
@@ -1576,8 +1580,8 @@
 
             <!-- Step 2: Confirm Payment -->
             <div style="background:#fff7ed;border-radius:14px;padding:12px 14px;margin-bottom:14px;">
-                <p style="font-size:11px;font-weight:800;text-transform:uppercase;color:#92400e;margin-bottom:6px;">Step 2: Payment ke baad Order Place karein</p>
-                <p style="font-size:11px;color:#78350f;line-height:1.6;">📸 Screenshot lo aur neeche wale button se order confirm karo. Humare team ko WhatsApp jayega!</p>
+                <p style="font-size:11px;font-weight:800;text-transform:uppercase;color:#92400e;margin-bottom:6px;">Step 2: Place Order After Payment</p>
+                <p style="font-size:11px;color:#78350f;line-height:1.6;">📸 Take a screenshot and confirm your order using the button below. It will be sent to our team on WhatsApp!</p>
             </div>
 
             <button onclick="sendScreenshotWA()" style="width:100%;padding:14px;background:linear-gradient(135deg,#25d366,#128c7e);color:white;border:none;border-radius:16px;font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 18px rgba(37,211,102,0.35);transition:all .2s;">
@@ -1590,7 +1594,7 @@
         <div id="waSection" style="display:none;">
             <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:14px;padding:14px;margin-bottom:14px;">
                 <p style="font-weight:700;color:#166534;font-size:13px;margin-bottom:4px;">💬 WhatsApp se Order — Cash on Delivery</p>
-                <p style="font-size:12px;color:#166534;opacity:.8;line-height:1.5;">Aapka full order aur delivery details humari team ko jayenge. Payment baad mein ya delivery pe kar sakte hain.</p>
+                <p style="font-size:12px;color:#166534;opacity:.8;line-height:1.5;">Your full order and delivery details will be sent to our team. Payment can be made later or at delivery.</p>
             </div>
             <button id="waOrderBtn" onclick="confirmWAOrder()" style="width:100%;padding:15px;background:linear-gradient(135deg,#25d366,#128c7e);color:white;border:none;border-radius:16px;font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 18px rgba(37,211,102,0.35);">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -1604,8 +1608,8 @@
     <!-- ════════ STEP 3: CONFIRMED ════════ -->
     <div id="orderStep3" style="display:none;padding:20px;text-align:center;">
         <div style="font-size:64px;margin-bottom:12px;">🎉</div>
-        <h3 style="font-family:'Playfair Display',serif;color:#78350f;font-size:1.5rem;margin-bottom:6px;">Order Placed!</h3>
-        <p style="font-size:13px;color:#92400e;margin-bottom:18px;line-height:1.6;">Aapka order hamare team tak pahunch gaya hai.<br>WhatsApp pe confirmation aayega jald hi!</p>
+        <h3 style="font-family:'Playfair Display',serif;color:#78350f;font-size:1.5rem;margin-bottom:6px;">Order Placed! 🎉</h3>
+        <p style="font-size:13px;color:#92400e;margin-bottom:18px;line-height:1.6;">Your order has been received by our team.<br>You will receive a WhatsApp confirmation shortly!</p>
         <div style="background:#fff7ed;border-radius:14px;padding:14px;margin-bottom:16px;text-align:left;">
             <div style="font-size:10px;font-weight:800;color:#78350f;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">📦 Order Summary</div>
             <div id="confirmSummary" style="font-size:12px;color:#1c1917;line-height:1.8;"></div>
@@ -1628,7 +1632,7 @@
             <h2>Terms &amp; Conditions</h2>
             <button onclick="closeModal('termsModal')" class="p-2 text-gray-400 hover:bg-gray-100 rounded-full shrink-0"><i data-lucide="x" class="w-5 h-5"></i></button>
         </div>
-        <p class="text-gray-400 text-xs mb-5 italic">Last updated: January 2025 &nbsp;|&nbsp; Purnendra Bakery &amp; Party Hub, New Delhi</p>
+        <p class="text-gray-400 text-xs mb-5 italic">Last updated: January 2025 &nbsp;|&nbsp; Laxman Bakery &amp; Party Hub, New Delhi</p>
 
         <h3>1. Acceptance of Terms</h3>
         <p>By accessing our website, placing an order, or interacting with us via WhatsApp, you agree to be bound by these Terms &amp; Conditions. If you do not agree, please discontinue use of our services.</p>
@@ -1645,7 +1649,7 @@
         <ul>
             <li>All prices are displayed in Indian Rupees (₹) and include applicable taxes.</li>
             <li>Delivery charges, if applicable, are communicated at the time of order confirmation.</li>
-            <li>Purnendra Bakery reserves the right to revise prices without prior notice.</li>
+            <li>Laxman Bakery reserves the right to revise prices without prior notice.</li>
         </ul>
 
         <h3>4. Delivery</h3>
@@ -1667,10 +1671,10 @@
         </ul>
 
         <h3>7. Intellectual Property</h3>
-        <p>All content on this website — including images, logos, and descriptions — is the property of Purnendra Bakery. Reproduction or commercial use without written consent is strictly prohibited.</p>
+        <p>All content on this website — including images, logos, and descriptions — is the property of Laxman Bakery. Reproduction or commercial use without written consent is strictly prohibited.</p>
 
         <h3>8. Limitation of Liability</h3>
-        <p>Purnendra Bakery's liability is limited to the value of the order placed. We are not liable for indirect, consequential, or incidental damages arising from product use.</p>
+        <p>Laxman Bakery's liability is limited to the value of the order placed. We are not liable for indirect, consequential, or incidental damages arising from product use.</p>
 
         <h3>9. Privacy</h3>
         <p>Customer information shared via this website or WhatsApp is used solely to process orders and improve service. We do not sell or share personal data with third parties.</p>
@@ -1781,7 +1785,7 @@
         </div>
 
         <!-- CTA Buttons -->
-        <!-- ✏️ COD_ENABLED=true karo to COD button dikhai dega -->
+        <!-- ✏️ COD_ENABLED=true to show the COD button -->
         <div class="pp-cta-row">
             <button class="pp-add-btn" onclick="ppAddToCart()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -1863,6 +1867,21 @@
         <div class="pp-similar-grid" id="ppSimilarGrid"></div>
     </div>
 
+    <!-- Mini Footer inside product page -->
+    <footer style="background:#111827;color:white;padding:24px 20px;margin-top:20px;">
+        <div style="max-width:680px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+            <div>
+                <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#d4af37;font-weight:700;font-style:italic;">Laxman Bakery</div>
+                <div style="font-size:11px;color:#6b7280;margin-top:2px;">Premium Bakery &amp; Party Hub · New Delhi</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:#9ca3af;">
+                <a href="tel:9399564309" style="color:#d4af37;text-decoration:none;">📞 +91 9399564309</a>
+                <a href="https://wa.me/919399564309" target="_blank" style="color:#25d366;text-decoration:none;">💬 WhatsApp</a>
+                <button onclick="closeProductPage();setTimeout(()=>document.getElementById('termsModal')&&openModal('termsModal'),300)" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:11px;font-family:'Poppins',sans-serif;">Terms &amp; Conditions</button>
+            </div>
+        </div>
+        <div style="max-width:680px;margin:12px auto 0;padding-top:12px;border-top:1px solid #1f2937;font-size:10px;color:#374151;text-align:center;">© 2025 Laxman Bakery &amp; Party Hub. All Rights Reserved.</div>
+    </footer>
 </div><!-- /productPage -->
 
 <!-- ============================================================
@@ -1883,11 +1902,22 @@
         <div id="favEmpty" style="text-align:center;padding:60px 20px;display:none;">
             <div style="font-size:56px;margin-bottom:12px;">💔</div>
             <p style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#78350f;font-weight:700;margin-bottom:6px;">No Favourites Yet</p>
-            <p style="font-size:13px;color:#92400e;margin-bottom:20px;">Koi product pasand aaye toh ❤️ dabao!</p>
+            <p style="font-size:13px;color:#92400e;margin-bottom:20px;">Tap ❤️ on any product you love!</p>
             <button onclick="closeFavorites()" style="background:#78350f;color:white;border:none;border-radius:20px;padding:10px 24px;font-weight:700;cursor:pointer;">Browse Products</button>
         </div>
         <div id="favGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;"></div>
     </div>
+    <!-- Mini Footer inside favorites page -->
+    <footer style="background:#111827;color:white;padding:20px;margin-top:20px;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
+            <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#d4af37;font-style:italic;">Laxman Bakery</div>
+            <div style="display:flex;gap:12px;font-size:11px;">
+                <a href="tel:9399564309" style="color:#d4af37;text-decoration:none;">📞 +91 9399564309</a>
+                <a href="https://wa.me/919399564309" target="_blank" style="color:#25d366;text-decoration:none;">💬 WhatsApp</a>
+            </div>
+        </div>
+        <div style="font-size:10px;color:#374151;text-align:center;margin-top:10px;">© 2025 Laxman Bakery. All Rights Reserved.</div>
+    </footer>
 </div>
 
 <div id="wishlistPage">
@@ -1913,21 +1943,45 @@
 ========================================== -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     /* ════════════════════════════════════════════════════
-       ✏️  MAIN SETTINGS — SABSE ZAROORI — YAHAN BADLEIN
+       ✏️  MAIN SETTINGS — MOST IMPORTANT — CHANGE HERE
        ════════════════════════════════════════════════════ */
 
-    /* ✏️ WHATSAPP: 91 ke baad apna number (koi dash/space nahi) */
+    /* ✏️ WHATSAPP: Your number after 91 (no dash/space) */
+
+    /* ╔═══════════════════════════════════════════════════════════╗
+       ║  HOW TO ADD A NEW PRODUCT — EASY GUIDE FOR LAXMAN BAKERY  ║
+       ╠═══════════════════════════════════════════════════════════╣
+       ║  1. In the HTML (productGrid section), copy any            ║
+       ║     product-card block (from <!-- ====== ITEM: ...         ║
+       ║     to the closing </div>)                                 ║
+       ║  2. Change the following values:                           ║
+       ║     • data-id="XX-00"  → your new product code            ║
+       ║     • data-cat="Cake"  → Cake/Chocolate/Pastry/Cupcake    ║
+       ║     • data-name="..."  → product name                     ║
+       ║     • data-price="000" → price in rupees                  ║
+       ║     • img src="..."    → your photo URL                   ║
+       ║     • The text inside the card (name, price, description)  ║
+       ║  3. Give it a unique ID like 'C5', 'CH3', etc.            ║
+       ║  HOW TO CHANGE AN OFFER:                                  ║
+       ║  • Offers are in the offerBanners array below              ║
+       ║  • Change 'text' to your offer text                        ║
+       ║  • Change 'code' to the discount code (or "" for none)     ║
+       ║  HOW TO ADD/CHANGE DISCOUNT CODE:                         ║
+       ║  • Find DISCOUNT_CODES object below                        ║
+       ║  • Add: "MYCODE": 15   means MYCODE gives 15% OFF         ║
+       ╚═══════════════════════════════════════════════════════════╝ */
+
     const WHATSAPP_NUM = "919399564309";
 
-    /* ✏️ UPI ID: Apna UPI ID yahan daalo */
+    /* ✏️ UPI ID: Enter your UPI ID here */
     const UPI_ID = "9399564309@ybl";
 
     /* ════════════════════════════════════════════════════
-       ✏️  OFFER BANNERS — Top pe rotating banners
-       Band karne ke liye: offerBanners = []
-       Naya banner add karne ke liye: ek aur object copy karo
+       ✏️  OFFER BANNERS — Rotating banners at the top
+       To disable: offerBanners = []
+       To add a new banner: copy one more object
        code: "" = no discount code shown
-       bg: CSS background value (gradient ya color)
+       bg: CSS background value (gradient or color)
        ════════════════════════════════════════════════════ */
     const offerBanners = [
         {
@@ -1953,32 +2007,32 @@
     ];
 
     /* ════════════════════════════════════════════════════
-       ✏️  DISCOUNT CODES — Order par discount
-       Naya code add: "NEWCODE": 15 (15% off)
-       Code band karne ke liye: line delete karo
+       ✏️  DISCOUNT CODES — Discount on order
+       Add new code: "NEWCODE": 15 (15% off)
+       To disable a code: delete the line
        ════════════════════════════════════════════════════ */
     const DISCOUNT_CODES = {
         "CAKE10":    10,    /* 10% off — cake offer */
         "CHOCO10":   10,    /* 10% off — chocolate offer */
         "WELCOME15": 15,    /* 15% off — naye customer ke liye */
-        "PARTY20":   20,    /* 20% off — party order ke liye */
+        "PARTY20":   20,    /* 20% off — for party orders */
     };
 
     /* ════════════════════════════════════════════════════
-       ✏️  COD (Cash on Delivery) — Ghar par cash payment
-       Shuru karne ke liye: COD_ENABLED = true
-       Band karne ke liye: COD_ENABLED = false
-       Card mein COD button auto show/hide hoga
+       ✏️  COD (Cash on Delivery) — Cash payment at home
+       To enable: COD_ENABLED = true
+       To disable: COD_ENABLED = false
+       COD button will auto show/hide in card
        ════════════════════════════════════════════════════ */
-    const COD_ENABLED = false;  /* ← YAHAN BADLEIN */
+    const COD_ENABLED = false;  /* ← CHANGE HERE */
 
     /* ════════════════════════════════════════════════════
-       ✏️  HOME DELIVERY — Ghar par delivery service
-       Shuru karne ke liye: DELIVERY_ENABLED = true
-       Band karne ke liye: DELIVERY_ENABLED = false
-       Nav bar mein "Delivery" button auto show/hide hoga
+       ✏️  HOME DELIVERY — Home delivery service
+       To enable: DELIVERY_ENABLED = true
+       To disable: DELIVERY_ENABLED = false
+       "Delivery" button will auto show/hide in nav bar
        ════════════════════════════════════════════════════ */
-    const DELIVERY_ENABLED = false;  /* ← YAHAN BADLEIN */
+    const DELIVERY_ENABLED = false;  /* ← CHANGE HERE */
 
     /* Applied discount state */
     let _appliedDiscountPct = 0;
@@ -2010,9 +2064,14 @@
             isOpen = time >= 9 && time < 22;  // Mon-Sat 9AM–10PM
         }
 
-        // Closed banner
+        // Open / Closed banner
         document.body.classList.toggle('shop-closed', !isOpen);
-        document.getElementById('closedBanner').style.display = isOpen ? 'none' : 'block';
+        document.getElementById('closedBanner').style.display = isOpen ? 'none' : 'flex';
+        const openBanner = document.getElementById('openBanner');
+        if (openBanner) openBanner.style.display = isOpen ? 'flex' : 'none';
+        // Show offer topBar only when open (open banner appears instead when closed)
+        const topBar = document.getElementById('topBar');
+        if (topBar) topBar.style.display = isOpen ? 'block' : 'none';
 
         // Footer status
         const footerEl = document.getElementById('footerStatus');
@@ -2107,14 +2166,33 @@
     }
     function _refreshPayAmount() {
         const d = _payData || {};
-        const base = d.salePrice || 0;
+        let base = 0;
+        if (d.mode === 'cart') {
+            cart.forEach(i => base += i.price * i.qty);
+        } else {
+            base = d.salePrice || 0;
+        }
         if (!base) return;
         const disc = _appliedDiscountPct > 0 ? Math.round(base * _appliedDiscountPct / 100) : 0;
         const final = base - disc;
+        // Update main amount banner (big number at top of modal)
+        const mainAmt = document.getElementById('payAmountDisplay');
+        if (mainAmt) {
+            if (disc > 0) {
+                mainAmt.innerHTML = '₹' + final + '<span style="font-size:0.9rem;color:#16a34a;font-weight:700;display:block;margin-top:2px;">✅ Saved ₹' + disc + ' (' + _appliedDiscountPct + '% OFF)</span>';
+            } else {
+                mainAmt.textContent = '₹' + base;
+            }
+        }
         const amtEl = document.getElementById('upiAmtDisplay');
         if (amtEl) amtEl.textContent = '₹' + final + (disc > 0 ? ' (saved ₹' + disc + ')' : '');
         const payTxt = document.getElementById('payAmtText');
         if (payTxt) payTxt.textContent = '₹' + final;
+        // Update item count / summary
+        const itemCountEl = document.getElementById('payItemCount');
+        if (itemCountEl && disc > 0) {
+            itemCountEl.textContent = (d.mode === 'cart' ? cart.length + ' item(s)' : '1 item') + ' · ' + _appliedDiscountPct + '% OFF applied';
+        }
     }
     function showCODInfo() {
         showToast('💵 COD available! Select "Cash on Delivery" in pay modal.');
@@ -2131,21 +2209,35 @@
                     2nd press = exit site
     ========================================== */
     (function() {
-        // Only push state if this isn't a back-triggered reload
-        if (!sessionStorage.getItem('backHandled')) {
-            history.pushState({ bakery: true }, '', window.location.href);
-        }
+        // Smart back button: close any open overlay/page, then go home on next press
+        history.pushState({ bakery: true }, '', window.location.href);
         window.addEventListener('popstate', function() {
-            if (!sessionStorage.getItem('backHandled')) {
-                // First back press: mark and reload (scroll to top = "refresh")
-                sessionStorage.setItem('backHandled', '1');
+            // Priority: close product page > close cart > close favorites > scroll to top
+            const productPage = document.getElementById('productPage');
+            const favPage = document.getElementById('favoritesPage');
+            const cartDrawer = document.getElementById('cartDrawer');
+            const loginModal = document.getElementById('loginModal');
+            const payModal = document.getElementById('payModal');
+
+            if (productPage && productPage.classList.contains('open')) {
+                closeProductPage();
                 history.pushState({ bakery: true }, '', window.location.href);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                location.reload();
+            } else if (favPage && favPage.classList.contains('open')) {
+                if (typeof closeFavorites === 'function') closeFavorites();
+                history.pushState({ bakery: true }, '', window.location.href);
+            } else if (cartDrawer && !cartDrawer.classList.contains('translate-x-[100%]') && cartDrawer.style.transform !== 'translateX(100%)') {
+                toggleCart(false);
+                history.pushState({ bakery: true }, '', window.location.href);
+            } else if (loginModal && loginModal.style.display !== 'none' && loginModal.style.display !== '') {
+                closeModal('loginModal');
+                history.pushState({ bakery: true }, '', window.location.href);
+            } else if (payModal && payModal.style.display !== 'none' && payModal.style.display !== '') {
+                closeModal('payModal');
+                history.pushState({ bakery: true }, '', window.location.href);
             } else {
-                // Second back press: clear flag and truly go back (exit)
-                sessionStorage.removeItem('backHandled');
-                history.back();
+                // Already on home — scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                history.pushState({ bakery: true }, '', window.location.href);
             }
         });
     })();
@@ -2355,7 +2447,7 @@
         const itemEl = document.getElementById('payItemCount');
         if (itemEl) itemEl.textContent = label;
         // Pre-build QR
-        const upiUri = `upi://pay?pa=${UPI_ID}&pn=Purnendra+Bakery&am=${amount}&cu=INR`;
+        const upiUri = `upi://pay?pa=${UPI_ID}&pn=Laxman+Bakery&am=${amount}&cu=INR`;
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upiUri)}&size=180x180&margin=10&color=78350f`;
         const qrEl = document.getElementById('upiQrImg'); if(qrEl) qrEl.src = qrUrl;
         const upiEl = document.getElementById('upiIdText'); if(upiEl) upiEl.textContent = UPI_ID;
@@ -2380,10 +2472,10 @@
     function _launchUPIApp() {
         const d = _payData;
         const amount = d.salePrice;
-        const upiUri = `upi://pay?pa=${UPI_ID}&pn=Purnendra+Bakery&am=${amount}&cu=INR&tn=Order+Purnendra+Bakery`;
+        const upiUri = `upi://pay?pa=${UPI_ID}&pn=Laxman+Bakery&am=${amount}&cu=INR&tn=Order+Laxman+Bakery`;
 
         // Try intent URI first for Android, fallback to standard URI
-        const intentUri = `intent://pay?pa=${UPI_ID}&pn=Purnendra+Bakery&am=${amount}&cu=INR&tn=Order+Purnendra+Bakery#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;S.browser_fallback_url=${encodeURIComponent(upiUri)};end`;
+        const intentUri = `intent://pay?pa=${UPI_ID}&pn=Laxman+Bakery&am=${amount}&cu=INR&tn=Order+Laxman+Bakery#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;S.browser_fallback_url=${encodeURIComponent(upiUri)};end`;
 
         const isAndroid = /android/i.test(navigator.userAgent);
         // Use hidden iframe trick so page doesn't navigate away
@@ -2545,7 +2637,7 @@
             const SAVINGS_AMT     = PRODUCT_MRP - PRODUCT_PRICE;
 
             const msg = encodeURIComponent(
-`✅ *UPI PAYMENT DONE — Purnendra Bakery*
+`✅ *UPI PAYMENT DONE — Laxman Bakery*
 
 ${CUSTOMER_LINE}
 
@@ -2594,7 +2686,7 @@ Please confirm my order. Thank you! 🎂`
                 : `\n💰 *Grand Total: ₹${TOTAL_AMOUNT}*`;
 
             const msg = encodeURIComponent(
-`✅ *UPI PAYMENT DONE — Purnendra Bakery*
+`✅ *UPI PAYMENT DONE — Laxman Bakery*
 
 ${CUSTOMER_LINE}
 
@@ -2629,19 +2721,19 @@ Please confirm my order. Thank you! 🎂`
         if(typeof gtag!=='undefined') gtag('event','purchase',{
             currency:'INR', value:amount, payment_type:payMethod
         });
-        /* Supabase — order save karo */
+        /* Supabase — save order */
         _sbInsert('pb_orders', {
             item_name: itemName, amount, pay_method: payMethod,
             customer_name: user ? user.name : 'Guest',
             customer_phone: user ? user.phone : '',
             ordered_at: new Date().toISOString()
         });
-        /* EmailJS — aapko notification email */
+        /* EmailJS — notification email to you */
         if(typeof emailjs!=='undefined' && emailjs.send) emailjs.send(EJS_SERVICE_ID, EJS_TMPL_ORDER, {
             to_email: OWNER_EMAIL,
             item_name: itemName, amount, pay_method: payMethod,
             customer: user ? `${user.name} (${user.phone})` : 'Guest',
-            order_time: now, website: 'Purnendra Bakery'
+            order_time: now, website: 'Laxman Bakery'
         }).catch(()=>{});
     }
 
@@ -2673,7 +2765,7 @@ Please confirm my order. Thank you! 🎂`
         const user = getLoggedInUser();
         const customerLine = user ? `👤 *Customer:* ${user.name} | 📱 ${user.phone}` : `👤 *Customer:* Guest`;
         const msg = encodeURIComponent(
-`🛒 *NEW ORDER — Purnendra Bakery*
+`🛒 *NEW ORDER — Laxman Bakery*
 
 ${customerLine}
 
@@ -2693,7 +2785,7 @@ ${desc}
 🖼️ *Product Photo:* ${photo}
 
 Please confirm availability and delivery details.
-Thank you for choosing Purnendra Bakery! 🎂`
+Thank you for choosing Laxman Bakery! 🎂`
         );
         window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
     }
@@ -2711,7 +2803,7 @@ Thank you for choosing Purnendra Bakery! 🎂`
         const user = getLoggedInUser();
         const customerLine = user ? `👤 *Customer:* ${user.name} | 📱 ${user.phone}` : `👤 *Customer:* Guest`;
         const msg = encodeURIComponent(
-`🧺 *BASKET ORDER — Purnendra Bakery*
+`🧺 *BASKET ORDER — Laxman Bakery*
 
 ${customerLine}
 
@@ -2949,6 +3041,12 @@ Please confirm and share delivery details. Thank you! 🎂`
     }
 
     function handleLoginBtnClick() {
+        const modal = document.getElementById('loginModal');
+        // If modal is already open, close it (toggle behaviour)
+        if (modal && modal.classList.contains('open')) {
+            closeModal('loginModal');
+            return;
+        }
         const user = getLoggedInUser();
         if (user) { showLoggedInPanel(user); }
         else { switchLoginTab('login'); }
@@ -3012,16 +3110,16 @@ Please confirm and share delivery details. Thank you! 🎂`
         updateCartUserBadge();
         showToast('Account created! Welcome, ' + name + '! 🎉');
 
-        /* ── EmailJS: Aapko notification email aayegi ── */
+        /* ── EmailJS: You will receive a notification email ── */
         const now = new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
         if(typeof emailjs!=='undefined' && emailjs.send) emailjs.send(EJS_SERVICE_ID, EJS_TMPL_REG, {
             to_email: OWNER_EMAIL,
             user_name: name, user_phone: phone,
             user_email: email || 'Not provided',
-            reg_time: now, website: 'Purnendra Bakery'
+            reg_time: now, website: 'Laxman Bakery'
         }).catch(()=>{});
 
-        /* ── Supabase: User database mein save ── */
+        /* ── Supabase: Save user to database ── */
         _sbInsert('pb_users', {
             name, phone, email: email||'',
             created_at: new Date().toISOString()
@@ -3398,7 +3496,7 @@ Please confirm and share delivery details. Thank you! 🎂`
         const cName = user ? user.name : 'Customer';
         const cPhone = user ? '\nMobile: ' + user.phone : '';
         const msg = encodeURIComponent(
-`🚚 *CASH ON DELIVERY ORDER — Purnendra Bakery*
+`🚚 *CASH ON DELIVERY ORDER — Laxman Bakery*
 
 👤 ${cName}${cPhone}
 
@@ -3421,9 +3519,9 @@ Please confirm & share delivery address. Thank you! 🙏`
     /* ── Share Product ── */
     function shareProduct() {
         if(!_curProd) return;
-        const text = `Check out ${_curProd.name} at Purnendra Bakery! Only ₹${_curProd.sale} 🎂`;
+        const text = `Check out ${_curProd.name} at Laxman Bakery! Only ₹${_curProd.sale} 🎂`;
         if(navigator.share) {
-            navigator.share({title:'Purnendra Bakery', text, url: window.location.href}).catch(()=>{});
+            navigator.share({title:'Laxman Bakery', text, url: window.location.href}).catch(()=>{});
         } else {
             navigator.clipboard.writeText(text + ' ' + window.location.href).then(()=>showToast('Link copied! 📋')).catch(()=>{});
         }
@@ -3648,7 +3746,7 @@ Please confirm & share delivery address. Thank you! 🙏`
         if (!list) return;
         try {
             const history = JSON.parse(localStorage.getItem('pb_order_history') || '[]');
-            if (history.length === 0) { list.innerHTML = '<p style="font-size:12px;color:#a8a29e;text-align:center;padding:12px;">Abhi tak koi order nahi hai.</p>'; return; }
+            if (history.length === 0) { list.innerHTML = '<p style="font-size:12px;color:#a8a29e;text-align:center;padding:12px;">No orders yet.</p>'; return; }
             list.innerHTML = history.map(o => `<div class="order-history-card">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;">
                     <div>
@@ -3665,7 +3763,7 @@ Please confirm & share delivery address. Thank you! 🙏`
     /* ═══════════════════════════════════════════════════════
        3-STEP ORDER MODAL FUNCTIONS
     ═══════════════════════════════════════════════════════ */
-    let _deliveryTime = 'Aaj (Today)';
+    let _deliveryTime = 'Today';
     function selectDeliveryTime(btn, val) {
         document.querySelectorAll('.dtime-btn').forEach(b => {
             b.style.borderColor='#e7e5e4'; b.style.background='white'; b.style.color='#78350f';
@@ -3681,7 +3779,7 @@ Please confirm & share delivery address. Thank you! 🙏`
         const addr = (document.getElementById('orderAddress')?.value || '').trim();
         const errEl = document.getElementById('step1Err');
         if (!name) { if(errEl){errEl.textContent='Naam zaroori hai!';errEl.style.display='block';} return; }
-        if (!phone || phone.length < 10) { if(errEl){errEl.textContent='Sahi mobile number daalo (10 digits)!';errEl.style.display='block';} return; }
+        if (!phone || phone.length < 10) { if(errEl){errEl.textContent='Please enter a valid 10-digit mobile number!';errEl.style.display='block';} return; }
         if (!addr) { if(errEl){errEl.textContent='Delivery address zaroori hai!';errEl.style.display='block';} return; }
         if (errEl) errEl.style.display='none';
         // Save to _payData
@@ -3767,12 +3865,12 @@ Please confirm & share delivery address. Thank you! 🙏`
         if (d.mode === 'cart') {
             let total = 0; cart.forEach(i => total += i.price * i.qty);
             const items = cart.map((it,i) => `${i+1}. *${it.name}* × ${it.qty} = ₹${it.price*it.qty}`).join('\n');
-            const msg = encodeURIComponent(`🛒 *NEW ORDER — Purnendra Bakery*\n${delivDetails}\n\n🧺 *BASKET:*\n${items}\n\n💰 *Total: ₹${total}*\n\n💳 Payment: Cash on Delivery`);
+            const msg = encodeURIComponent(`🛒 *NEW ORDER — Laxman Bakery*\n${delivDetails}\n\n🧺 *BASKET:*\n${items}\n\n💰 *Total: ₹${total}*\n\n💳 Payment: Cash on Delivery`);
             window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
             _trackOrder('WhatsApp COD', total, 'Cart Order');
             _showStep3('Cart Order', total, 'WhatsApp COD');
         } else {
-            const msg = encodeURIComponent(`🛒 *NEW ORDER — Purnendra Bakery*\n${delivDetails}\n\n${d.unicode} *${d.name}* (ID: ${d.id})\n💰 ₹${d.salePrice}\n💳 Payment: Cash on Delivery`);
+            const msg = encodeURIComponent(`🛒 *NEW ORDER — Laxman Bakery*\n${delivDetails}\n\n${d.unicode} *${d.name}* (ID: ${d.id})\n💰 ₹${d.salePrice}\n💳 Payment: Cash on Delivery`);
             window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
             _trackOrder('WhatsApp COD', d.salePrice, d.name);
             _showStep3(d.name, d.salePrice, 'WhatsApp COD');
@@ -3793,11 +3891,11 @@ Please confirm & share delivery address. Thank you! 🙏`
         if (d.mode === 'cart') {
             let total = 0;
             const items = cart.map((it,i)=>{ total += it.price*it.qty; return `${i+1}. *${it.name}* × ${it.qty} = ₹${it.price*it.qty}`; }).join('\n');
-            msg = encodeURIComponent(`✅ *UPI PAYMENT DONE — Purnendra Bakery*\n${delivDetails}\n\n🧺 *BASKET:*\n${items}\n${disc}\n💰 *Total: ₹${total}*\n\n💳 Paid via UPI | UPI ID: ${UPI_ID}\n📸 Screenshot attached!`);
+            msg = encodeURIComponent(`✅ *UPI PAYMENT DONE — Laxman Bakery*\n${delivDetails}\n\n🧺 *BASKET:*\n${items}\n${disc}\n💰 *Total: ₹${total}*\n\n💳 Paid via UPI | UPI ID: ${UPI_ID}\n📸 Screenshot attached!`);
             _trackOrder('UPI', total, 'Cart Order');
             _showStep3('Cart Order', total, 'UPI');
         } else {
-            msg = encodeURIComponent(`✅ *UPI PAYMENT DONE — Purnendra Bakery*\n${delivDetails}\n\n${d.unicode} *${d.name}*\n💰 MRP ₹${d.mrp} → Sale ₹${d.salePrice}${disc}\n💵 Final: ₹${finalAmt}\n\n💳 Paid via UPI | UPI ID: ${UPI_ID}\n📸 Screenshot attached!`);
+            msg = encodeURIComponent(`✅ *UPI PAYMENT DONE — Laxman Bakery*\n${delivDetails}\n\n${d.unicode} *${d.name}*\n💰 MRP ₹${d.mrp} → Sale ₹${d.salePrice}${disc}\n💵 Final: ₹${finalAmt}\n\n💳 Paid via UPI | UPI ID: ${UPI_ID}\n📸 Screenshot attached!`);
             _trackOrder('UPI', finalAmt, d.name);
             _showStep3(d.name, finalAmt, 'UPI');
         }
@@ -3833,15 +3931,15 @@ Please confirm & share delivery address. Thank you! 🙏`
 <!-- ============================================================
      TAWK.TO LIVE CHAT
      Sign up: tawk.to → Dashboard → Settings → Chat Widget
-     Apna script code wahan se copy karke neeche paste karo
-     (is script ko hata ke apna daalo)
+     Copy your script code from there and paste below
+     (replace this script with yours)
 ============================================================ -->
 <script>
-    /* TAWK.TO PLACEHOLDER — apna widget ID daalo */
-    /* Sign up at tawk.to, phir Settings > Chat Widget > Widget Code copy karo */
+    /* TAWK.TO PLACEHOLDER — add your widget ID */
+    /* Sign up at tawk.to, then Settings > Chat Widget > copy Widget Code */
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
-        /* YAHAN APNA TAWK.TO SCRIPT PASTE KARO */
+        /* PASTE YOUR TAWK.TO SCRIPT HERE */
         /* Example format:
         var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
         s1.async=true;
@@ -3850,19 +3948,19 @@ Please confirm & share delivery address. Thank you! 🙏`
         s1.setAttribute('crossorigin','*');
         s0.parentNode.insertBefore(s1,s0);
         */
-        console.log('Tawk.to: Apna widget ID add karein → tawk.to pe sign up karo');
+        console.log('Tawk.to: Apna widget ID add karein → tawk.to — sign up at');
     })();
 </script>
 
 <!-- ============================================================
      ONESIGNAL PUSH NOTIFICATIONS
-     Sign up: onesignal.com → New App → Web → App ID milega
-     SDK kaise add karo: PDF guide dekho Chapter 5
+     Sign up: onesignal.com → New App → Web → Get your App ID
+     How to add SDK: See documentation on onesignal.com
 ============================================================ -->
 <script>
     /* OneSignal placeholder */
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    /* APNA APP ID YAHAN DAALO — onesignal.com se milega */
+    /* ADD YOUR APP ID HERE — get it from onesignal.com */
     /* OneSignalDeferred.push(async function(OneSignal) {
         await OneSignal.init({
             appId: "YOUR-APP-ID-HERE",
@@ -3870,7 +3968,7 @@ Please confirm & share delivery address. Thank you! 🙏`
             serviceWorkerPath: "/OneSignalSDKWorker.js",
         });
     }); */
-    /* Activate karne ke liye upar ki lines se comments hatao aur App ID daalo */
+    /* To activate: remove comments from the lines above and add App ID */
 </script>
 
     <!-- External SDKs (loaded at end to not block page) -->
